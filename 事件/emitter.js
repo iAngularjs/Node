@@ -1,3 +1,4 @@
+var utils = require("util");
 var EventEmitter = require("events").EventEmitter;
 
 var events = new EventEmitter();
