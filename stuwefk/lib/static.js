@@ -1,4 +1,4 @@
-var url = require("http"),
+var url = require("url"),
 	fs = require("fs");
 
 function url2path (url_str) {
@@ -8,17 +8,22 @@ function url2path (url_str) {
 }
 
 module.exports = function static(parent_path){
+
 	return function(req,res,next){
+
 		var path = url2path(req.url);
+
 		function callback(err,data){
 
 			if(err){
-				res.statusCode = 404;
+				//res.statusCode = 404;
+				next();
 			}else{
 				res.write(data);
 			}
 			res.end();
 		}
+
 		fs.readFile(parent_path+path,callback);
 	}
 }

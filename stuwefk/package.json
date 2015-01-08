@@ -1,0 +1,25 @@
+{
+  "name": "studwebfk_branck",
+  "version": "1.0.2",
+  "description": "Node\r ====",
+  "main": "service.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iAngularjs/Node.git"
+  },
+  "author": "andy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/iAngularjs/Node/issues"
+  },
+  "homepage": "https://github.com/iAngularjs/Node",
+  "directories": {
+    "example": "example"
+  },
+  "keywords": [
+    "node"
+  ]
+}
