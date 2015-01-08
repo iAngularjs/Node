@@ -10,5 +10,5 @@ var req = http.get(opts,function(res){
 	//res.setEncoding('utf8');
 	res.on('data',function(data){
 		console.log(data);
-	})
+	});
 })
