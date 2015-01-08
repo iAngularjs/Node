@@ -5,9 +5,14 @@
 
  console.log(arr1);*/
 
-var num1 = num2 = 3;
+var http = require('http');
 
-num2+=2;
+http.createServer(function(req,res){
 
-console.log(num1);
-console.log(num2);
+  console.log(req.url);
+
+  res.writeHead(200);
+
+  res.end('end process');
+
+}).listen(8);

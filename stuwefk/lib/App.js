@@ -1,4 +1,5 @@
-var http = require("http");
+var http = require("http"),
+	url = require('url');
 
 module.exports = App;
 
@@ -6,59 +7,58 @@ function App () {
 
 	var self = this;
 
-	this._getHandle = null;
-	this._postHandle = null;
+	/*this._getHandle = null;
+	this._postHandle = null;*/
+
+	this._route_post_handles = {}; //最新修改
+
+	this._route_get_handles = {}; //最新修改
 
 	var middleList = this._middleList = [];
 
 	function handle(req,res){
 
-		if( middleList.length == 0 ){
-			//do nothing
+		var middleIndex = 0;
+		execMiddle();
 
-		}else{
-
-			var middleIndex = 0;
+		function next(){
+			middleIndex += 1;
 			execMiddle();
+		}
 
-			function next(){
-				middleIndex += 1;
-				execMiddle();
-			}
+		function execMiddle(){
 
-			function execMiddle(){
+			var middle = middleList[middleIndex];
 
-				var middle = middleList[middleIndex];
+			if(middle){
 
-				if(middle){
+				middle(req,res,next);
 
-					middle(req,res,next);
+			}else{
 
-				}else{
+				var handle;
+				var path = url.parse(req.url).path;
 
-					switch(req.method){
+				switch(req.method){
 
-						case "GET":
+					case "GET":
 
-							if(self._getHandle){
-								self._getHandle(req,res);
-							}
+						handle = self._route_get_handles[path];
 
-						break;
+					break;
 
-						case "POST":
-							if(self._postHandle){
-								self._postHandle(req,res);
-							}
-						break;
-					}
+					case "POST":
 
+						handle = self._route_post_handles[path];
+
+					break;
 				}
+
+				if( handle ){
+					handle(req,res);
+				}
+
 			}
-
-
-
-
 		}
 
 	}
@@ -74,10 +74,10 @@ App.prototype.listen = function(){
 	this._server.listen.apply(this._server,arguments);
 }
 
-App.prototype.get = function(handleGet){
-	this._getHandle = handleGet;
+App.prototype.get = function(route,handleGet){
+	this._route_get_handles[route] = handleGet;
 }
 
-App.prototype.post = function(handlePost){
-	this._postHandle = handlePost;
+App.prototype.post = function(route,handlePost){
+	this._route_post_handles[route] = handlePost;
 }
