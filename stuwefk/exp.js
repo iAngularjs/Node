@@ -5,6 +5,7 @@
 
  console.log(arr1);*/
 
+/*
 var http = require('http');
 
 http.createServer(function(req,res){
@@ -15,4 +16,12 @@ http.createServer(function(req,res){
 
   res.end('end process');
 
-}).listen(8);
+}).listen(8);*/
+
+//数组的forEach方法
+/*
+var arr = [1,2,3,4];
+
+arr.forEach(function(v,index){
+    console.log( v +"---"+index );
+})*/
